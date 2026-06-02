@@ -21,6 +21,7 @@ while acceso:
     try:
         opcion = int(input("ingrese una opcion\n"))
         if opcion == 1:
+            os.system("cls")
             while True: #debemos validar que el nombre solo sean letras y no este vacio
                 nombre = input("Ingrese su nombre\n").title()
                 if nombre.isalpha() and len(nombre) > 0:
@@ -43,11 +44,20 @@ while acceso:
                 except:
                     print("edad ingresada debe ser numerica")
             while True: #validar que el correo tenga larg minimo 6 y contenga al menos un @ y un .
-                correo = input("Ingrese su correo\n")
-                if "@" in correo and "." in correo and len(correo) >= 6:
-                    break
+                correo = input("ingrese su correo\n")
+                existe = False
+                
+                for p in postulantes:
+                    if p["correo"] == correo:
+                        existe = True
+                
+                if existe :  #correo@correo.cl
+                    print("Correo ya esta registrado, intenta con otro")
+                elif "@" not in correo or "." not in correo:
+                    print("Correo inválido.")
                 else:
-                    print("correo debe tener largo minimo 6 caracteres, @ y . para ser valido ej: example@correo.com")
+                    break
+                                
             while True: #validamops que la carrera tenga largo minimo 6
                 carrera = input("Ingrese su carrera\n")
                 if len(carrera) >= 6 :
@@ -83,6 +93,7 @@ while acceso:
             print(f"{nombre} te has postulado con exito: postulacion {estado}")
 
         elif opcion == 2:
+            os.system("cls")
             print("Ver postulantes")
             #validamos que existan postulante dentro de postulantes
             if len(postulantes) > 0: #imprimimos los datos de todos los postulante
@@ -99,10 +110,47 @@ while acceso:
                 print("No existen postulantes registrados")
             
         elif opcion == 3:
-            print("")
-        elif opcion == 4:
-            print("")
+            os.system("cls")
+            print("Buscar postulante por correo")
+            if len(postulantes) == 0:
+                print("No existen postulantes para buscar")
+            else:
+                correo_buscar = input("ingrese correo para buscar un postulante\n")
+                encontrado = False
+                
+                for p in postulantes:
+                    if p["correo"] == correo_buscar:
+                        encontrado = True
+                        print(f"Nombre completo: {p["nombre"]} {p["apellido"]}")
+                        print(f"Edad: {p["edad"]}")
+                        print(f"Correo: {p["correo"]}")
+                        print(f"Carrera: {p["carrera"]}")
+                        print(f"Promedio: {p["promedio"]}")
+                        print(f"Estado: {p["estado"]}")
+                if encontrado == False:
+                    print("Correo no existe en postulaciones")
             
+                                    
+        elif opcion == 4:
+            os.system("cls")
+            print("Ver postulantes aceptados")
+            aceptado = False
+            if len(postulantes) == 0:
+                print("No existen postulantes")
+            else:
+                for p in postulantes:
+                    if p["estado"] == "Aceptado":
+                        aceptado = True
+                        print(f"Nombre completo: {p["nombre"]} {p["apellido"]}")
+                        print(f"Edad: {p["edad"]}")
+                        print(f"Correo: {p["correo"]}")
+                        print(f"Carrera: {p["carrera"]}")
+                        print(f"Promedio: {p["promedio"]}")
+                        print(f"Estado: {p["estado"]}")
+                        print("******************")
+                if aceptado == False:
+                    print("No existen postulantes Aceptados")   
+                                  
         elif opcion == 5:
             print("")
             
