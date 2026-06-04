@@ -58,7 +58,7 @@ while acceso:
                 else:
                     break
                                 
-            while True: #validamops que la carrera tenga largo minimo 6
+            while True: #validamos que la carrera tenga largo minimo 6
                 carrera = input("Ingrese su carrera\n")
                 if len(carrera) >= 6 :
                     break
@@ -73,7 +73,7 @@ while acceso:
                         print("el promedio debe estar en el rango de escala chilena ")
                 except:
                     print("el promedio debe ser un tipo de dato numerico")
-            if edad >= 20 and promedio >= 5.5: #verificamos si la postulacion fue aceptada o rechazada segun criterios de edad y promedio
+            if edad >= 20 and promedio >= 5.5 and vacante > 0: #verificamos si la postulacion fue aceptada o rechazada segun criterios de edad y promedio
                 estado = "Aceptado"
                 vacante = vacante  - 1
             else:
@@ -149,13 +149,43 @@ while acceso:
                         print(f"Estado: {p["estado"]}")
                         print("******************")
                 if aceptado == False:
-                    print("No existen postulantes Aceptados")   
-                                  
+                    print("No existen postulantes Aceptados")     
         elif opcion == 5:
-            print("")
-            
+            print("Ver estadísticas")
+            #total postulantes
+            total = len(postulantes)
+            if total == 0:
+                print("no existen postulantes registrados")
+            else:
+                suma_promedio = 0
+                aceptado = 0
+                rechazado = 0
+                mejor_promedio = postulantes[0]["promedio"]
+                nombre_mejor_promedio = postulantes[0]["nombre"]
+                
+                for p in postulantes:
+                    suma_promedio = suma_promedio + p["promedio"]
+                    if p["estado"] == "Aceptado":
+                        #aceptados
+                        aceptado = aceptado + 1
+                    else:
+                        #rechazados
+                        rechazado = rechazado + 1
+                        
+                    #postulante con el mayor promedio    
+                    if p["promedio"] > mejor_promedio:
+                        mejor_promedio = p["promedio"]
+                        nombre_mejor_promedio = p["nombre"]
+                #promedio general
+                promedio_general = suma_promedio / total
+                print(f"Total de postulantes: {total}")
+                print(f"Promedio general: {promedio_general}")
+                print(f"Cantidad de aceptados: {aceptado}")
+                print(f"Cantidad de rechazados: {rechazado}")
+                print(f"Mayor promedio: {nombre_mejor_promedio} tiene mejor promedio con un {mejor_promedio}")
+ 
         elif opcion == 6:
-            print("")
+            print(f"Cantidad de vacantes disponibles: {vacante}")
             
         elif opcion == 7:
             print("Hasta luego :)  ")
